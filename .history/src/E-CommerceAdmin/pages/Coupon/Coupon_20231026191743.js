@@ -123,7 +123,7 @@ const Coupon = () => {
               <Form.Label>Min Order</Form.Label>
               <Form.Control
                 type="number"
-                onChange={(e) => setMinOrder(e.target.value)}
+                onChange={(e) => setDiscount(e.target.value)}
               />
             </Form.Group>
 

@@ -54,7 +54,7 @@ const Coupon = () => {
     fd.append("discount", discount);
     fd.append("startDate", startDate);
     fd.append("endDate", endDate);
-    fd.append("minOrder", minOrder);
+    fd.append("endDate", endDate);
 
     const postHandler = async (e) => {
       e.preventDefault();
@@ -116,14 +116,6 @@ const Coupon = () => {
               <Form.Control
                 type="number"
                 onChange={(e) => setDiscount(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Min Order</Form.Label>
-              <Form.Control
-                type="number"
-                onChange={(e) => setMinOrder(e.target.value)}
               />
             </Form.Group>
 
