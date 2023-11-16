@@ -86,8 +86,6 @@ function App() {
     { path: "/Driver", element: <ProductType /> },
     { path: "/shift", element: <SkinCondition /> },
     { path: "/area", element: <SkinType /> },
-    { path: "/time", element: <Acne /> },
-    { path: "/cancel_order", element: <Blog /> },
   ];
   function generateRoutes() {
     return routesData.map((route, index) => (
@@ -101,13 +99,14 @@ function App() {
 
 
 
+
   return (
     <>
       <ReactNotifications />
 
       <Routes>
         {/* <Route path="/" element={<Login />} />
-     
+        <Route path="/getblog" element={<Blog />} />
         <Route path="/ad" element={<Ad />} />
        
         <Route path="/banner/:id" element={<SingleBanner />} />
@@ -131,7 +130,7 @@ function App() {
         <Route path="/ingredients" element={<Ingredeints />} />
         <Route path="/giftCard" element={<GiftCard />} />
         <Route path="/creatGift" element={<CreateGiftCard />} />
-
+        <Route path="/acne" element={<Acne />} />
         <Route path="/acne-suggestion" element={<AcneSuggestion />} />
         <Route path="/add-on-service" element={<AddOnService />} />
         <Route path="/gallery" element={<Gallery />} />

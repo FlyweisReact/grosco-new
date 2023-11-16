@@ -99,6 +99,7 @@ function App() {
     ));
   }
 
+  <Route path="/getblog" element={<Blog />} />
 
 
   return (

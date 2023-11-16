@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import HOC from "../../layout/HOC";
-import { Table, Alert, Modal, Form, Button } from "react-bootstrap";
+import { Table, Alert, Modal, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import SpinnerComp from "../Component/SpinnerComp";
 import { Baseurl, showMsg } from "../../../Baseurl";
 
-const Acne = () => {
+const Blog = () => {
   const [data, setData] = useState([]);
-  const [modalShow, setModalShow] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [id, setId] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [id, setId] = useState("");
+  const [modalShow, setModalShow] = useState(false);
 
   const token = localStorage.getItem("AdminToken");
   const Auth = {
@@ -24,8 +25,9 @@ const Acne = () => {
 
   const fetchData = async () => {
     try {
-      const { data } = await axios.get(`${Baseurl}api/v1/time`);
-      setData(data);
+      const { data } = await axios.get(`${Baseurl}api/v1/cancel/order`);
+      setData(data.data);
+      setTotal(data.data.length);
     } catch (e) {
       console.log(e);
     }
@@ -35,37 +37,25 @@ const Acne = () => {
     fetchData();
   }, []);
 
-  const deleteHandler = async (id) => {
-    try {
-      const { data } = await axios.delete(`${Baseurl}api/v1/time/${id}`, Auth);
-      const msg = data.message;
-      showMsg("Success", msg, "success");
-      fetchData();
-    } catch (e) {
-      const msg = e.response.data.message;
-      toast.error(msg);
-    }
-  };
-
   function MyVerticallyCenteredModal(props) {
-    const [shift, setShift] = useState("");
-    const [timing, setTiming] = useState("");
+    const [image, setImage] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDesc] = useState("");
 
-    const formPayload = {
-      shift,
-      timing,
-    };
+    const fd = new FormData();
+    fd.append("description", description);
+    fd.append("image", image);
+    fd.append("title", title);
 
     const postHandler = async (e) => {
       e.preventDefault();
       try {
         const { data } = await axios.post(
-          `${Baseurl}api/v1/time`,
-          formPayload,
+          `${Baseurl}api/v1/News/addNews`,
+          fd,
           Auth
         );
-        const msg = data.message;
-        showMsg("Success", msg, "success");
+        toast.success(data.message);
         props.onHide();
         fetchData();
       } catch (e) {
@@ -77,8 +67,8 @@ const Acne = () => {
       e.preventDefault();
       try {
         const { data } = await axios.put(
-          `${Baseurl}api/v1/time/${id}`,
-          formPayload,
+          `${Baseurl}api/v1/News/updateNews/${id}`,
+          fd,
           Auth
         );
         toast.success(data.message);
@@ -94,7 +84,6 @@ const Acne = () => {
         {...props}
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        size="lg"
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -105,18 +94,29 @@ const Acne = () => {
         <Modal.Body>
           <Form onSubmit={edit ? putHandler : postHandler}>
             <Form.Group className="mb-3">
-              <Form.Label>Shift</Form.Label>
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="file"
+                required
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                onChange={(e) => setShift(e.target.value)}
+                required
+                onChange={(e) => setTitle(e.target.value)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Timing</Form.Label>
+              <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
-                onChange={(e) => setTiming(e.target.value)}
+                as="textarea"
+                rows={10}
+                required
+                onChange={(e) => setDesc(e.target.value)}
               />
             </Form.Group>
 
@@ -132,31 +132,37 @@ const Acne = () => {
     );
   }
 
+  const deleteHandler = async (ide) => {
+    try {
+      const { data } = await axios.delete(`${Baseurl}api/v1/cancel/order/delete/${ide}`, Auth);
+      toast.success(data.message);
+      const msg = data.message
+      showMsg("Success" , msg , "success")
+      fetchData();
+    } catch (e) {
+      const msg = e.response.data.message;
+      toast.error(msg);
+    }
+  };
+
   return (
     <>
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+
       <section className="sectionCont">
-        <div className="pb-4  w-full flex justify-between items-center">
+        <div
+          className="pb-4  w-full flex justify-between items-center"
+          style={{ width: "98%", marginLeft: "2%" }}
+        >
           <span
             className="tracking-widest text-slate-900 font-semibold uppercase"
             style={{ fontSize: "1.5rem" }}
           >
-            Time
+            Cancelled Order ( Total : {total} )
           </span>
-          <div className="d-flex gap-1">
-            <button
-              className="md:py-2 px-3 md:px-4 py-1 rounded-sm bg-[#0c0c0c] text-white tracking-wider"
-              onClick={() => {
-                setEdit(false);
-                setModalShow(true);
-              }}
-            >
-              Create New
-            </button>
-          </div>
         </div>
 
         {data?.length === 0 || !data ? (
@@ -164,40 +170,27 @@ const Acne = () => {
         ) : (
           <>
             <div className="overFlowCont">
-              {data?.length === 0 || !data ? (
+              {data?.docs?.length === 0 || !data ? (
                 <Alert>No Product Found</Alert>
               ) : (
                 <Table>
                   <thead>
                     <tr>
                       <th>Sno.</th>
-                      <th> Shift </th>
-                      <th> Timing </th>
-                      <th> </th>
+                      <th>Reason</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {data?.map((i, index) => (
                       <tr key={index}>
                         <td> #{index + 1} </td>
-                        <td> {i.shift} </td>
-                        <td> {i.timing} </td>
+                        <td> {i.reason} </td>
                         <td>
-                          <span className="flexCont">
-                            <i
-                              className="fa-solid fa-pen-to-square"
-                              onClick={() => {
-                                setId(i._id);
-                                setEdit(true);
-                                setModalShow(true);
-                              }}
-                            />
-
                             <i
                               className="fa-sharp fa-solid fa-trash"
                               onClick={() => deleteHandler(i._id)}
                             ></i>
-                          </span>
                         </td>
                       </tr>
                     ))}
@@ -212,4 +205,4 @@ const Acne = () => {
   );
 };
 
-export default HOC(Acne);
+export default HOC(Blog);

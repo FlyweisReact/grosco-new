@@ -87,7 +87,6 @@ function App() {
     { path: "/shift", element: <SkinCondition /> },
     { path: "/area", element: <SkinType /> },
     { path: "/time", element: <Acne /> },
-    { path: "/cancel_order", element: <Blog /> },
   ];
   function generateRoutes() {
     return routesData.map((route, index) => (
@@ -98,7 +97,6 @@ function App() {
       />
     ));
   }
-
 
 
   return (

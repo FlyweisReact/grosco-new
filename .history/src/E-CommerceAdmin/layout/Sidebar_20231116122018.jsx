@@ -125,14 +125,7 @@ const Sidebar = ({ hamb, setHamb }) => {
         <i className="fa-solid fa-address-card text-xl mr-3 rounded-full" />
       ),
       link: "/time",
-      name: "Time",
-    },
-    {
-      icon: (
-        <i className="fa-solid fa-address-card text-xl mr-3 rounded-full" />
-      ),
-      link: "/cancel_order",
-      name: "Cancelled Order",
+      name: "Area",
     },
   ];
 

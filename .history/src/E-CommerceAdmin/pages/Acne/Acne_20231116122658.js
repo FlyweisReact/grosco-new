@@ -38,8 +38,7 @@ const Acne = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(`${Baseurl}api/v1/time/${id}`, Auth);
-      const msg = data.message;
-      showMsg("Success", msg, "success");
+      toast.success(data.message);
       fetchData();
     } catch (e) {
       const msg = e.response.data.message;

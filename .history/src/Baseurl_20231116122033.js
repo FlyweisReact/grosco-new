@@ -10,7 +10,6 @@ export const Auth = {
   },
 };
 
-
 export const showMsg = (title, message, type) => {
   Store.addNotification({
     title,

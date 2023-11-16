@@ -87,7 +87,7 @@ function App() {
     { path: "/shift", element: <SkinCondition /> },
     { path: "/area", element: <SkinType /> },
     { path: "/time", element: <Acne /> },
-    { path: "/cancel_order", element: <Blog /> },
+    { path: "/time", element: <Acne /> },
   ];
   function generateRoutes() {
     return routesData.map((route, index) => (
@@ -99,6 +99,7 @@ function App() {
     ));
   }
 
+  <Route path="/getblog" element={<Blog />} />
 
 
   return (

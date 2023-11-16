@@ -87,7 +87,6 @@ function App() {
     { path: "/shift", element: <SkinCondition /> },
     { path: "/area", element: <SkinType /> },
     { path: "/time", element: <Acne /> },
-    { path: "/cancel_order", element: <Blog /> },
   ];
   function generateRoutes() {
     return routesData.map((route, index) => (
@@ -107,7 +106,7 @@ function App() {
 
       <Routes>
         {/* <Route path="/" element={<Login />} />
-     
+        <Route path="/getblog" element={<Blog />} />
         <Route path="/ad" element={<Ad />} />
        
         <Route path="/banner/:id" element={<SingleBanner />} />

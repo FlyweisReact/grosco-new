@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import SpinnerComp from "../Component/SpinnerComp";
-import { Baseurl, showMsg } from "../../../Baseurl";
+import { Baseurl } from "../../../Baseurl";
 
 const Acne = () => {
   const [data, setData] = useState([]);
@@ -37,9 +37,11 @@ const Acne = () => {
 
   const deleteHandler = async (id) => {
     try {
-      const { data } = await axios.delete(`${Baseurl}api/v1/time/${id}`, Auth);
-      const msg = data.message;
-      showMsg("Success", msg, "success");
+      const { data } = await axios.delete(
+        `${Baseurl}api/v1/admin/AcneQuiz/deleteAcneQuiz/${id}`,
+        Auth
+      );
+      toast.success(data.message);
       fetchData();
     } catch (e) {
       const msg = e.response.data.message;
@@ -64,8 +66,7 @@ const Acne = () => {
           formPayload,
           Auth
         );
-        const msg = data.message;
-        showMsg("Success", msg, "success");
+        toast.success(data.message);
         props.onHide();
         fetchData();
       } catch (e) {
@@ -77,8 +78,8 @@ const Acne = () => {
       e.preventDefault();
       try {
         const { data } = await axios.put(
-          `${Baseurl}api/v1/time/${id}`,
-          formPayload,
+          `${Baseurl}api/v1/AcneQuiz/updateAcneQuiz/${id}`,
+          fd,
           Auth
         );
         toast.success(data.message);
@@ -105,18 +106,66 @@ const Acne = () => {
         <Modal.Body>
           <Form onSubmit={edit ? putHandler : postHandler}>
             <Form.Group className="mb-3">
-              <Form.Label>Shift</Form.Label>
+              <Form.Label>Question</Form.Label>
               <Form.Control
                 type="text"
-                onChange={(e) => setShift(e.target.value)}
+                onChange={(e) => setQuestion(e.target.value)}
               />
             </Form.Group>
-
             <Form.Group className="mb-3">
-              <Form.Label>Timing</Form.Label>
+              <Form.Label>Option 1</Form.Label>
               <Form.Control
                 type="text"
-                onChange={(e) => setTiming(e.target.value)}
+                onChange={(e) => setOption1(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 1 Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setOption1Image(e.target.files[0])}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 2</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => setOption2(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 2 Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setOption2Image(e.target.files[0])}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 3</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => setOption3(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 3 Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setOption3Image(e.target.files[0])}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 4</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={(e) => setOption4(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Option 4 Image</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setOption4Image(e.target.files[0])}
               />
             </Form.Group>
 

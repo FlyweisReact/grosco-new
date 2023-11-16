@@ -37,9 +37,11 @@ const Acne = () => {
 
   const deleteHandler = async (id) => {
     try {
-      const { data } = await axios.delete(`${Baseurl}api/v1/time/${id}`, Auth);
-      const msg = data.message;
-      showMsg("Success", msg, "success");
+      const { data } = await axios.delete(
+        `${Baseurl}api/v1/admin/AcneQuiz/deleteAcneQuiz/${id}`,
+        Auth
+      );
+      toast.success(data.message);
       fetchData();
     } catch (e) {
       const msg = e.response.data.message;
@@ -77,7 +79,7 @@ const Acne = () => {
       e.preventDefault();
       try {
         const { data } = await axios.put(
-          `${Baseurl}api/v1/time/${id}`,
+          `${Baseurl}api/v1/AcneQuiz/updateAcneQuiz/${id}`,
           formPayload,
           Auth
         );

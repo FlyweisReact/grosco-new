@@ -2,14 +2,13 @@
 
 import { Store } from "react-notifications-component";
 
-export const Baseurl = "https://rohit-deka-grosco.vercel.app/";
+export const Baseurl = "  ";
 
 export const Auth = {
   headers: {
     Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
   },
 };
-
 
 export const showMsg = (title, message, type) => {
   Store.addNotification({
