@@ -51,7 +51,7 @@ const Dashboard = () => {
       const response = await axios.get(
         "https://rohit-deka-grosco.vercel.app/api/v1/order/all"
       );
-      setOrderCount(response.data.orders.length);
+      setOrderCount(response.data.data.total);
     } catch (e) {
       console.log(e);
     }

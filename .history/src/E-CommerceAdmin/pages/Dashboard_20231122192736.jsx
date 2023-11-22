@@ -27,9 +27,9 @@ const Dashboard = () => {
   const fetchCategory = async () => {
     try {
       const { data } = await axios.get(
-        "https://rohit-deka-grosco.vercel.app/api/v1/get/user"
+        "https://rohit-deka-grosco.vercel.app/api/v1/get/user        r"
       );
-      setCategoryCount(data.users.length);
+      setCategoryCount(data.data.length);
     } catch (e) {
       console.log(e);
     }
@@ -49,9 +49,9 @@ const Dashboard = () => {
   const fetchOrder = async () => {
     try {
       const response = await axios.get(
-        "https://rohit-deka-grosco.vercel.app/api/v1/order/all"
+        "https://krish-vapes-backend.vercel.app/api/v1/admin/paginate/OrdersSearch"
       );
-      setOrderCount(response.data.orders.length);
+      setOrderCount(response.data.data.total);
     } catch (e) {
       console.log(e);
     }
