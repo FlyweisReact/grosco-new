@@ -75,7 +75,7 @@ const CreateProduct = () => {
           Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
         },
       });
-      const msg = data?.message;
+      const msg = data.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
     } catch (e) {

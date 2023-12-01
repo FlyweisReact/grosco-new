@@ -50,8 +50,6 @@ const CreateProduct = () => {
     getAllSub();
   }, []);
 
-
-  console.log(localStorage.getItem("AdminToken"))
   const fd = new FormData();
   Array.from(images).forEach((img) => {
     fd.append("image", img);
@@ -75,7 +73,7 @@ const CreateProduct = () => {
           Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
         },
       });
-      const msg = data?.message;
+      const msg = data.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
     } catch (e) {

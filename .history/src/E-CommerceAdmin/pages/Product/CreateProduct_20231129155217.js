@@ -50,8 +50,6 @@ const CreateProduct = () => {
     getAllSub();
   }, []);
 
-
-  console.log(localStorage.getItem("AdminToken"))
   const fd = new FormData();
   Array.from(images).forEach((img) => {
     fd.append("image", img);
@@ -70,12 +68,14 @@ const CreateProduct = () => {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      const { data } = await axios.post(`${Baseurl}api/v1/product/new`, fd, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
-        },
-      });
-      const msg = data?.message;
+      const { data } = await axios.post(
+        `${Baseurl}api/v1/product/new`,
+        fd,
+        {
+          
+        }
+      );
+      const msg = data.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
     } catch (e) {
