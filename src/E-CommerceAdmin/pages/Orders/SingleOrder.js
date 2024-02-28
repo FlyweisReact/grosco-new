@@ -16,7 +16,7 @@ const SingleOrder = () => {
       const response = await axios.get(`${Baseurl}api/v1/order/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setData(response.data);
+      setData(response.data?.order);
     } catch (e) {
       console.log(e);
     }

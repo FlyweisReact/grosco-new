@@ -22,8 +22,6 @@ const SingleOrder = () => {
     }
   };
 
-  console.log(data);
-
   useEffect(() => {
     getOrder();
   }, []);
@@ -39,29 +37,25 @@ const SingleOrder = () => {
     );
   }
 
+  console.log(data)
+
   return (
     <>
       <section className="sectionCont">
-        <p className="headP">Dashboard / {data?.orderId}</p>
-
-        {ValueChecker(data?.orderId, "Order Id")}
-        {ValueChecker(data?.total, "Total Amount")}
-        {ValueChecker(data?.discount, "Discount Amount")}
-        {ValueChecker(data?.subTotal, "SubTotal Amount")}
-        {ValueChecker(data?.shipping, "Shipping Amount")}
-        {ValueChecker(data?.memberShip, "Membership Amount")}
-        {ValueChecker(data?.grandTotal, "Grand Total Amount")}
-        {ValueChecker(data?.user?.firstName, "User First Name")}
-        {ValueChecker(data?.user?.lastName, "User Last Name")}
-        {ValueChecker(data?.user?.phone, "User Contact Detail")}
-        {ValueChecker(data?.user?.email, "User Email Address")}
-
+        <p className="headP">Dashboard / {data?._id}</p>
+        {ValueChecker(data?.totalAmount, "Total Amount")}
+        {ValueChecker(data?.includePaperBag, "Include Paper Bag")}
+        {ValueChecker(data?.status, "Status")}
+        {ValueChecker(data?.paymentMethod, "Payment Method")}
+        {ValueChecker(data?.returned, "Returned")}
+        {ValueChecker(data?.shipping, "Shipping")}
+        {ValueChecker(data?.tax, "Tax")}
         {data?.address && (
           <div className="Desc-Container">
             <p className="title"> Billing Address </p>
-            <p className="desc"> Address : {data?.address?.name} </p>
-            <p className="desc"> Apartment : {data?.address?.name}</p>
-            <p className="desc"> City : {data?.address?.name} </p>
+            <p className="desc"> Name : {data?.address?.name} </p>
+            <p className="desc"> Flat : {data?.address?.flat}</p>
+            <p className="desc"> Street : {data?.address?.street} </p>
           </div>
         )}
         {ValueChecker(data?.createdAt?.slice(0, 10), "Created At")}

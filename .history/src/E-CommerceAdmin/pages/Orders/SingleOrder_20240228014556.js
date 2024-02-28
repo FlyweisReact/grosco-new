@@ -16,13 +16,11 @@ const SingleOrder = () => {
       const response = await axios.get(`${Baseurl}api/v1/order/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setData(response.data);
+      setData(response.data?.order);
     } catch (e) {
       console.log(e);
     }
   };
-
-  console.log(data);
 
   useEffect(() => {
     getOrder();
@@ -39,11 +37,19 @@ const SingleOrder = () => {
     );
   }
 
+  console.log(data)
+
   return (
     <>
       <section className="sectionCont">
         <p className="headP">Dashboard / {data?._id}</p>
-      {ValueChecker(data?.totalAmount , "Total Amount")}
+        {ValueChecker(data?.totalAmount, "Total Amount")}
+        {ValueChecker(data?.includePaperBag, "Include Paper Bag")}
+        {ValueChecker(data?.status, "Status")}
+        {ValueChecker(data?.paymentMethod, "Payment Method")}
+        {ValueChecker(data?.returned, "Returned")}
+        {ValueChecker(data?.shipping, "Shipping")}
+        {ValueChecker(data?.tax, "Tax")}
         {data?.address && (
           <div className="Desc-Container">
             <p className="title"> Billing Address </p>
