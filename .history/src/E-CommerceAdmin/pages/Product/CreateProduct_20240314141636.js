@@ -2,18 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import HOC from "../../layout/HOC";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form, Button, FloatingLabel, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Auth, Baseurl, showMsg } from "../../../Baseurl";
+import { Baseurl, showMsg } from "../../../Baseurl";
 
-const EditProduct = () => {
-  const { product } = useParams();
+const CreateProduct = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [unit, setUnit] = useState("kg");
+  const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubCategory] = useState("");
@@ -69,16 +68,17 @@ const EditProduct = () => {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      const { data } = await axios.put(
-        `${Baseurl}api/v1/product/${product}`,
-        fd,
-        Auth
-      );
-      const msg = data.message;
+      const { data } = await axios.post(`${Baseurl}api/v1/product/new`, fd, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
+        },
+      });
+      const msg = data?.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
     } catch (e) {
       console.log(e);
+      setSubmitLoading(false);
       const msg = e.response.data.message;
       toast.error(msg);
       setSubmitLoading(false);
@@ -88,7 +88,7 @@ const EditProduct = () => {
   return (
     <section>
       <section className="sectionCont">
-        <p className="headP">Dashboard / Edit Product</p>
+        <p className="headP">Dashboard / Create New Product</p>
 
         <Form onSubmit={createProduct}>
           <Form.Group className="mb-3">
@@ -101,7 +101,7 @@ const EditProduct = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>Category</Form.Label>
-            <Form.Select onChange={(e) => setCategory(e.target.value)}>
+            <Form.Select required onChange={(e) => setCategory(e.target.value)}>
               <option>Selete Your Prefrence</option>
               {categoryArr?.map((i, index) => (
                 <option value={i._id} key={`Category ${index}`}>
@@ -147,17 +147,10 @@ const EditProduct = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Unit</Form.Label>
-            <Form.Select
-              required
+            <Form.Control
+              type="text"
               onChange={(e) => setUnit(e.target.value)}
-              value={unit}
-            >
-              <option value="">Select</option>
-              <option value="kg">KG</option>
-              <option value="liter">Liter</option>
-              <option value="packet">Packet</option>
-              <option value="pieces">Pieces</option>
-            </Form.Select>
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
@@ -206,4 +199,4 @@ const EditProduct = () => {
   );
 };
 
-export default HOC(EditProduct);
+export default HOC(CreateProduct);

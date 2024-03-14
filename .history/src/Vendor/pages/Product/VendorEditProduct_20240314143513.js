@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Auth, Baseurl, showMsg } from "../../../Baseurl";
 
-const EditProduct = () => {
-  const { product } = useParams();
+const VendorEditProduct = () => {
+  const { id } = useParams();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,7 +70,7 @@ const EditProduct = () => {
     setSubmitLoading(true);
     try {
       const { data } = await axios.put(
-        `${Baseurl}api/v1/product/${product}`,
+        `${Baseurl}api/v1/product/${id}`,
         fd,
         Auth
       );
@@ -147,17 +147,10 @@ const EditProduct = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Unit</Form.Label>
-            <Form.Select
-              required
+            <Form.Control
+              type="text"
               onChange={(e) => setUnit(e.target.value)}
-              value={unit}
-            >
-              <option value="">Select</option>
-              <option value="kg">KG</option>
-              <option value="liter">Liter</option>
-              <option value="packet">Packet</option>
-              <option value="pieces">Pieces</option>
-            </Form.Select>
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
@@ -196,7 +189,7 @@ const EditProduct = () => {
               )}
             </Button>
 
-            <Link to="/Orders">
+            <Link to="/vendor_products">
               <Button variant="dark">Back</Button>
             </Link>
           </div>
@@ -206,4 +199,4 @@ const EditProduct = () => {
   );
 };
 
-export default HOC(EditProduct);
+export default HOC(VendorEditProduct);

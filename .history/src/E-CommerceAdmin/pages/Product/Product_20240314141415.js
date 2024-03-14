@@ -18,6 +18,7 @@ const Product = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${Baseurl}api/v1/products`);
+      console.log(data);
       setData(data);
       setTotal(data?.length);
     } catch (e) {
@@ -32,7 +33,7 @@ const Product = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(
-        `${Baseurl}api/v1/product/delete/${id}`,
+        `${Baseurl}api/v1/product/${id}`,
         Auth
       );
       const msg = data?.message;
@@ -56,6 +57,7 @@ const Product = () => {
     }
   };
 
+  console.log(data);
   return (
     <>
       <section className="sectionCont">

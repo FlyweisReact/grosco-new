@@ -32,7 +32,7 @@ const Product = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(
-        `${Baseurl}api/v1/product/delete/${id}`,
+        `${Baseurl}api/v1/product/${id}`,
         Auth
       );
       const msg = data?.message;

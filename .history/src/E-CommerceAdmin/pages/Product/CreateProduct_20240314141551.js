@@ -2,18 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import HOC from "../../layout/HOC";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form, Button, FloatingLabel, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Auth, Baseurl, showMsg } from "../../../Baseurl";
+import {  Baseurl, showMsg } from "../../../Baseurl";
 
-const EditProduct = () => {
-  const { product } = useParams();
+const CreateProduct = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [unit, setUnit] = useState("kg");
+  const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubCategory] = useState("");
@@ -51,6 +50,7 @@ const EditProduct = () => {
     getAllSub();
   }, []);
 
+
   const fd = new FormData();
   Array.from(images).forEach((img) => {
     fd.append("image", img);
@@ -69,12 +69,12 @@ const EditProduct = () => {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      const { data } = await axios.put(
-        `${Baseurl}api/v1/product/${product}`,
-        fd,
-        Auth
-      );
-      const msg = data.message;
+      const { data } = await axios.post(`${Baseurl}api/v1/product/new`, fd, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
+        },
+      });
+      const msg = data?.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
     } catch (e) {
@@ -88,7 +88,7 @@ const EditProduct = () => {
   return (
     <section>
       <section className="sectionCont">
-        <p className="headP">Dashboard / Edit Product</p>
+        <p className="headP">Dashboard / Create New Product</p>
 
         <Form onSubmit={createProduct}>
           <Form.Group className="mb-3">
@@ -147,17 +147,10 @@ const EditProduct = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Unit</Form.Label>
-            <Form.Select
-              required
+            <Form.Control
+              type="text"
               onChange={(e) => setUnit(e.target.value)}
-              value={unit}
-            >
-              <option value="">Select</option>
-              <option value="kg">KG</option>
-              <option value="liter">Liter</option>
-              <option value="packet">Packet</option>
-              <option value="pieces">Pieces</option>
-            </Form.Select>
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
@@ -206,4 +199,4 @@ const EditProduct = () => {
   );
 };
 
-export default HOC(EditProduct);
+export default HOC(CreateProduct);

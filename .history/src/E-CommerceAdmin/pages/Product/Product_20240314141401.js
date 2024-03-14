@@ -18,8 +18,8 @@ const Product = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${Baseurl}api/v1/products`);
-      setData(data);
-      setTotal(data?.length);
+      setData(data?.products);
+      setTotal(data?.products?.length);
     } catch (e) {
       console.log(e);
     }
@@ -32,7 +32,7 @@ const Product = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(
-        `${Baseurl}api/v1/product/delete/${id}`,
+        `${Baseurl}api/v1/product/${id}`,
         Auth
       );
       const msg = data?.message;
@@ -56,6 +56,8 @@ const Product = () => {
     }
   };
 
+
+  console.log(data)
   return (
     <>
       <section className="sectionCont">
