@@ -22,9 +22,7 @@ const ProductType = () => {
 
   const fetchHandler = async () => {
     try {
-      const { data } = await axios.get(
-        `${Baseurl}api/v1/driver/details`
-      );
+      const { data } = await axios.get(`${process.env.React_App_Baseurl}api/v1/driver/details`);
       setData(data);
     } catch (e) {
       console.log(e.message);
@@ -119,7 +117,7 @@ const ProductType = () => {
   }
 
   const handleDelete = async (ide) => {
-    const url = `https://shahina-backend.vercel.app/api/v1/admin/ProductType/deleteProductType/${ide}`;
+    const url = `${Baseurl}api/v1/delete/user/${ide}`;
     try {
       const { data } = await axios.delete(url, Auth);
       toast.success(data.message);
@@ -145,15 +143,7 @@ const ProductType = () => {
             >
               All Driver
             </span>
-            <button
-              className="md:py-2 px-3 md:px-4 py-1 rounded-sm bg-[#042b26] text-white tracking-wider"
-              onClick={() => {
-                setEdit(false);
-                setModalShow(true);
-              }}
-            >
-              Create New
-            </button>
+
           </div>
 
           {data?.length === 0 || !data ? (
@@ -172,7 +162,7 @@ const ProductType = () => {
                       <th> Gender </th>
                       <th> Pincode </th>
                       <th> Landmark </th>
-                      <th> Pincode </th>
+                      <th> Status </th>
                       <th></th>
                     </tr>
                   </thead>
@@ -194,14 +184,7 @@ const ProductType = () => {
                               className="fa-solid fa-trash"
                               onClick={() => handleDelete(i._id)}
                             />
-                            <i
-                              className="fa-solid fa-pen-to-square"
-                              onClick={() => {
-                                setId(i._id);
-                                setEdit(true);
-                                setModalShow(true);
-                              }}
-                            ></i>
+                           
                           </span>
                         </td>
                       </tr>
