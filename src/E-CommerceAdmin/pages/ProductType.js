@@ -155,6 +155,7 @@ const ProductType = () => {
                   <thead>
                     <tr>
                       <th>No.</th>
+                      <th>Firstname</th>
                       <th>Lastname</th>
                       <th>Door</th>
                       <th>Street</th>
@@ -170,6 +171,7 @@ const ProductType = () => {
                     {data?.map((i, index) => (
                       <tr key={index}>
                         <td>#{index + 1} </td>
+                        <td>{i.firstName} </td>
                         <td>{i.lastName} </td>
                         <td>{i.door} </td>
                         <td>{i.street} </td>
