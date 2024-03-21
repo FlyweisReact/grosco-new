@@ -104,6 +104,8 @@ const VendorOrder = () => {
                             <Button onClick={() => assignOrder(i._id)}>
                               Assign Order
                             </Button>
+                          ) : (
+                            ""
                           )}
                         </td>
                         <td>

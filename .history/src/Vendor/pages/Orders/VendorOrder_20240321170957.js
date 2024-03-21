@@ -100,10 +100,12 @@ const VendorOrder = () => {
                           {i.tax}{" "}
                         </td>
                         <td>
-                          {i.orderStatus !== "confirmed" && (
+                          {i.orderStatus === "confirmed" ? (
                             <Button onClick={() => assignOrder(i._id)}>
                               Assign Order
                             </Button>
+                          ) : (
+                            ""
                           )}
                         </td>
                         <td>

@@ -2,9 +2,8 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Table } from "react-bootstrap";
+import { Alert, Badge, Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Baseurl } from "../../../Baseurl";
 import HOC from "../../layout/HOC";
 
@@ -32,17 +31,31 @@ const VendorOrder = () => {
     getOrders();
   }, []);
 
-  const assignOrder = async (id) => {
-    try {
-      const res = await axios.post(
-        `${Baseurl}api/v1/assign/order/${id}`,
-        {},
-        Auth
-      );
-      toast.success("Order assigned");
-      getOrders();
-    } catch {}
-  };
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+            consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
+      </Modal>
+    );
+  }
+  
 
   return (
     <>
@@ -77,7 +90,6 @@ const VendorOrder = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(data)}
                     {data?.map((i, index) => (
                       <tr key={index}>
                         <td> #{index + 1} </td>
@@ -100,11 +112,7 @@ const VendorOrder = () => {
                           {i.tax}{" "}
                         </td>
                         <td>
-                          {i.orderStatus !== "confirmed" && (
-                            <Button onClick={() => assignOrder(i._id)}>
-                              Assign Order
-                            </Button>
-                          )}
+                          <Button>Assign Order</Button>
                         </td>
                         <td>
                           <span className="flexCont">

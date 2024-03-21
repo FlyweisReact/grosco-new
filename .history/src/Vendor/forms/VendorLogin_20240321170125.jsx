@@ -31,7 +31,7 @@ const VendorLogin = () => {
           password,
         }
       );
-      localStorage.setItem("VendorToken", data?.data?.token);
+      localStorage.setItem("AdminToken", data?.data?.token);
       localStorage.setItem("AdminToken", data?.data?.token);
       localStorage.setItem("VendorId", data?.user?._id);
       Store.addNotification({

@@ -77,7 +77,6 @@ const VendorOrder = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(data)}
                     {data?.map((i, index) => (
                       <tr key={index}>
                         <td> #{index + 1} </td>
@@ -100,11 +99,10 @@ const VendorOrder = () => {
                           {i.tax}{" "}
                         </td>
                         <td>
-                          {i.orderStatus !== "confirmed" && (
-                            <Button onClick={() => assignOrder(i._id)}>
-                              Assign Order
-                            </Button>
-                          )}
+                        {i.orderStatus === "confirmed" && }
+                          <Button onClick={() => assignOrder(i._id)}>
+                            Assign Order
+                          </Button>
                         </td>
                         <td>
                           <span className="flexCont">

@@ -127,9 +127,9 @@ const Product = () => {
                         <td> {i.createdBy?.fullName} </td>
                         <td>
                           <span className="flexCont">
-                            {/* <Link to={`/edit-product/${i._id}`}>
+                            <Link to={`/edit-product/${i._id}`}>
                               <i className="fa-solid fa-pen-to-square" />
-                            </Link> */}
+                            </Link>
                             <Link to={`/product/${i._id}`}>
                               <i className="fa-solid fa-eye" />
                             </Link>

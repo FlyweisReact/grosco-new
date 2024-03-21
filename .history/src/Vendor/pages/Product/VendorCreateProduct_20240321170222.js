@@ -68,11 +68,15 @@ const VendorCreateProduct = () => {
     e.preventDefault();
     setSubmitLoading(true);
     try {
-      const { data } = await axios.post(`${Baseurl}api/v1/product/new`, fd, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("VendorToken")}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${Baseurl}api/v1/product/new`,
+        fd,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("AdminToken")}`,
+          },
+        }
+      );
       const msg = data.message;
       showMsg("Success", msg, "success");
       setSubmitLoading(false);
